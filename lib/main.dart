@@ -1,6 +1,7 @@
 import 'package:appmovil/ui/login.dart';
 import 'package:appmovil/ui/principal_uc.dart';
 import 'package:appmovil/ui/principal_us.dart';
+import 'package:appmovil/ui/reporte.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,12 +14,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Login App',
       theme: ThemeData(
         primaryColor: Colors.black,
         scaffoldBackgroundColor: Colors.grey[850], // Fondo gris oscuro
       ),
-      home: const LoginPage(), // Iniciar con la página de login
+      home: const ReportPage(), // Iniciar con la página de login
     );
   }
 }

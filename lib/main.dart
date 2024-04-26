@@ -1,26 +1,20 @@
-import 'package:appmovil/ui/login.dart';
-import 'package:appmovil/ui/principal_uc.dart';
-import 'package:appmovil/ui/principal_us.dart';
-import 'package:appmovil/ui/reporte.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/UI/General/Reporte/reporte_widget.dart';
+// Asegúrate de que la ruta es correcta y apunta a tu archivo LoginWidget
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Login App',
+      title: 'Login App', // Cambia el título según lo necesites
       theme: ThemeData(
-        primaryColor: Colors.black,
-        scaffoldBackgroundColor: Colors.grey[850], // Fondo gris oscuro
+        primaryColor: const Color.fromARGB(255, 205, 152, 58) // Puedes personalizar el tema
       ),
-      home: const ReportPage(), // Iniciar con la página de login
+      home: const ReporteWidget(), // Carga el widget LoginWidget al inicio
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
-import 'soporte_widget.dart' show PrincipalUsWidget;
+import '../pages/Soporte/soporte_widget.dart' show PrincipalUsWidget;
 import 'package:flutter/material.dart';
 
 class PrincipalUsModel extends FlutterFlowModel<PrincipalUsWidget> {

@@ -1,7 +1,8 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/UI/Soporte/soporte_model.dart';
-export 'package:flutter_application_1/UI/Soporte/soporte_model.dart';
+import 'package:flutter_application_1/ui/controllers/soporte_model.dart';
+import 'package:get/get.dart';
+export 'package:flutter_application_1/ui/controllers/soporte_model.dart';
 
 class PrincipalUsWidget extends StatefulWidget {
   const PrincipalUsWidget({super.key});
@@ -38,9 +39,7 @@ class _PrincipalUsWidgetState extends State<PrincipalUsWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            print('FloatingActionButton pressed ...');
-          },
+          onPressed: () => Get.toNamed('/crearsoporte'),
           backgroundColor: const Color(0xFFCD983A),
           elevation: 8.0,
           child: Icon(

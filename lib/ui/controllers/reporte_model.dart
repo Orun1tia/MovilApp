@@ -1,5 +1,5 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
-import 'reporte_widget.dart' show ReporteWidget;
+import '../pages/General/Reporte/reporte_widget.dart' show ReporteWidget;
 import 'package:flutter/material.dart';
 
 class ReporteModel extends FlutterFlowModel<ReporteWidget> {

@@ -1,8 +1,8 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 
-import 'reporte_model.dart';
-export 'reporte_model.dart';
+import '../../../controllers/reporte_model.dart';
+export '../../../controllers/reporte_model.dart';
 
 class ReporteWidget extends StatefulWidget {
   const ReporteWidget({super.key});
@@ -13,7 +13,8 @@ class ReporteWidget extends StatefulWidget {
 
 class _ReporteWidgetState extends State<ReporteWidget> {
   late ReporteModel _model;
-
+  String _horainicio = 'Hora inicio';
+  String _horafinal = 'Hora final';
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -163,8 +164,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
+                                            color: const Color(0xFFCD983A),
                                             width: 2.0,
                                           ),
                                           borderRadius:
@@ -190,7 +190,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                         fillColor: (_model.fullNameFocusNode1
                                                     ?.hasFocus ??
                                                 false)
-                                            ? const Color(0x4D9489F5)
+                                            ? Color.fromARGB(255, 255, 255, 255)
                                             : Colors.white,
                                         contentPadding:
                                             const EdgeInsetsDirectional.fromSTEB(
@@ -204,7 +204,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                             letterSpacing: 0.0,
                                           ),
                                       cursorColor:
-                                          FlutterFlowTheme.of(context).primary,
+                                           const Color(0xFFCD983A),
                                       validator: _model
                                           .fullNameTextController1Validator
                                           .asValidator(context),
@@ -256,8 +256,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
+                                            color:  const Color(0xFFCD983A) ,
                                             width: 2.0,
                                           ),
                                           borderRadius:
@@ -283,7 +282,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                         fillColor: (_model.fullNameFocusNode2
                                                     ?.hasFocus ??
                                                 false)
-                                            ? const Color(0x4D9489F5)
+                                            ? Color.fromARGB(255, 255, 255, 255)
                                             : Colors.white,
                                         contentPadding:
                                             const EdgeInsetsDirectional.fromSTEB(
@@ -297,7 +296,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                             letterSpacing: 0.0,
                                           ),
                                       cursorColor:
-                                          FlutterFlowTheme.of(context).primary,
+                                           const Color(0xFFCD983A),
                                       validator: _model
                                           .fullNameTextController2Validator
                                           .asValidator(context),
@@ -348,10 +347,11 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                                       _datePickedTime.hour,
                                                       _datePickedTime.minute,
                                                     );
+                                                    _horainicio = _datePickedTime.format(context);
                                                   });
                                                 }
                                               },
-                                              text: 'Hora inicio',
+                                              text: _horainicio,
                                               options: FFButtonOptions(
                                                 width: double.infinity,
                                                 height: 48.0,
@@ -397,19 +397,32 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                           child: Padding(
                                             padding:
                                                 const EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 12.0, 0.0, 12.0),
+                                                    0.0, 12.0, 16.0, 12.0),
                                             child: FFButtonWidget(
                                               onPressed: () async {
-                                                if (_model.formKey
-                                                            .currentState ==
-                                                        null ||
-                                                    !_model
-                                                        .formKey.currentState!
-                                                        .validate()) {
-                                                  return;
+                                                final _datePickedTime =
+                                                    await showTimePicker(
+                                                  context: context,
+                                                  initialTime:
+                                                      TimeOfDay.fromDateTime(
+                                                          getCurrentTimestamp),
+                                                 
+                                                );
+                                                if (_datePickedTime != null) {
+                                                  safeSetState(() {
+                                                    _model.datePicked =
+                                                        DateTime(
+                                                      getCurrentTimestamp.year,
+                                                      getCurrentTimestamp.month,
+                                                      getCurrentTimestamp.day,
+                                                      _datePickedTime.hour,
+                                                      _datePickedTime.minute,
+                                                    );
+                                                     _horafinal = _datePickedTime.format(context);
+                                                  });
                                                 }
                                               },
-                                              text: 'Hora final',
+                                              text: _horafinal,
                                               options: FFButtonOptions(
                                                 width: double.infinity,
                                                 height: 48.0,
@@ -432,10 +445,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .secondaryText,
-                                                      fontSize: 16.0,
                                                       letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.w500,
                                                     ),
                                                 elevation: 0.0,
                                                 borderSide: const BorderSide(
@@ -465,103 +475,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                               fontWeight: FontWeight.w500,
                                             ),
                                       ),
-                                    ),
-                                    TextFormField(
-                                      controller:
-                                          _model.phoneNumberTextController,
-                                      focusNode: _model.phoneNumberFocusNode,
-                                      autofocus: true,
-                                      textCapitalization:
-                                          TextCapitalization.words,
-                                      obscureText: false,
-                                      decoration: InputDecoration(
-                                        labelText: 'Tipo de problema',
-                                        labelStyle: FlutterFlowTheme.of(context)
-                                            .labelLarge
-                                            .override(
-                                              fontFamily: 'Outfit',
-                                              color: const Color(0xFF606A85),
-                                              fontSize: 16.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                        hintStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .override(
-                                              fontFamily: 'Outfit',
-                                              color: const Color(0xFF606A85),
-                                              fontSize: 16.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                        errorStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Figtree',
-                                              color: const Color(0xFFFF5963),
-                                              fontSize: 16.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFFE5E7EB),
-                                            width: 2.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            width: 2.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFFFF5963),
-                                            width: 2.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFFFF5963),
-                                            width: 2.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                        ),
-                                        filled: true,
-                                        fillColor: (_model.phoneNumberFocusNode
-                                                    ?.hasFocus ??
-                                                false)
-                                            ? const Color(0x4D9489F5)
-                                            : Colors.white,
-                                        contentPadding:
-                                            const EdgeInsetsDirectional.fromSTEB(
-                                                16.0, 20.0, 16.0, 20.0),
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyLarge
-                                          .override(
-                                            fontFamily: 'Figtree',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                      cursorColor:
-                                          FlutterFlowTheme.of(context).primary,
-                                      validator: _model
-                                          .phoneNumberTextControllerValidator
-                                          .asValidator(context),
-                                    ),
+                                    ),                  
                                     Padding(
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                           0.0, 6.0, 0.0, 0.0),
@@ -617,8 +531,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                           focusedBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                               color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
+                                                   const Color(0xFFCD983A),
                                               width: 2.0,
                                             ),
                                             borderRadius:
@@ -646,7 +559,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                                       .descriptionFocusNode
                                                       ?.hasFocus ??
                                                   false)
-                                              ? const Color(0x4D9489F5)
+                                              ? Color.fromARGB(255, 255, 255, 255)
                                               : Colors.white,
                                           contentPadding:
                                               const EdgeInsetsDirectional.fromSTEB(
@@ -666,8 +579,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                         maxLines: 10,
                                         minLines: 8,
                                         cursorColor:
-                                            FlutterFlowTheme.of(context)
-                                                .primary,
+                                             const Color(0xFFCD983A),
                                         validator: _model
                                             .descriptionTextControllerValidator
                                             .asValidator(context),

@@ -1,9 +1,12 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_application_1/UI/Coordinador/coordinador_widget.dart';
+import 'package:flutter_application_1/ui/pages/Coordinador/coordinador_widget.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
-import 'package:flutter_application_1/UI/General/Login/login_model.dart';
-export 'package:flutter_application_1/UI/General/Login/login_model.dart';
+import 'package:flutter_application_1/ui/controllers/login_model.dart';
+import 'package:get/get.dart';
+export 'package:flutter_application_1/ui/controllers/login_model.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
@@ -363,13 +366,23 @@ class _LoginWidgetState extends State<LoginWidget>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 16.0),
                                 child: FFButtonWidget(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const PrincipalUcWidget()), // Navegar a SecondScreen
-                                    );
+                                  onPressed: () => {
+                                    if (_model.emailAddressTextController
+                                                .text ==
+                                            'admin' &&
+                                        _model.passwordTextController.text ==
+                                            'admin')
+                                      {Get.toNamed('/coordinador')}
+                                    else
+                                      {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                                'Usuario o contraseña incorrectos'),
+                                          ),
+                                        )
+                                      }
                                   },
                                   text: 'Iniciar sesion',
                                   options: FFButtonOptions(

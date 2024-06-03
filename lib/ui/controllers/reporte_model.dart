@@ -1,4 +1,10 @@
+import 'package:flutter_application_1/domain/models/report.dart';
+import 'package:flutter_application_1/domain/use_case/uc_usecase.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
+import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:loggy/loggy.dart';
 import '../pages/General/Reporte/reporte_widget.dart' show ReporteWidget;
 import 'package:flutter/material.dart';
 
@@ -8,22 +14,14 @@ class ReporteModel extends FlutterFlowModel<ReporteWidget> {
   final unfocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
   // State field(s) for fullName widget.
-  FocusNode? fullNameFocusNode1;
-  TextEditingController? fullNameTextController1;
-  String? Function(BuildContext, String?)? fullNameTextController1Validator;
-  // State field(s) for fullName widget.
-  FocusNode? fullNameFocusNode2;
-  TextEditingController? fullNameTextController2;
-  String? Function(BuildContext, String?)? fullNameTextController2Validator;
+  FocusNode? nombreFocusNode;
+  TextEditingController? nombreTextController;
+
+  FocusNode? idFocusNode;
+  TextEditingController? idTextController;
   DateTime? datePicked;
-  // State field(s) for phoneNumber widget.
-  FocusNode? phoneNumberFocusNode;
-  TextEditingController? phoneNumberTextController;
-  String? Function(BuildContext, String?)? phoneNumberTextControllerValidator;
-  // State field(s) for description widget.
-  FocusNode? descriptionFocusNode;
-  TextEditingController? descriptionTextController;
-  String? Function(BuildContext, String?)? descriptionTextControllerValidator;
+  FocusNode? resumenFocusNode;
+  TextEditingController? resumenTextController;
 
   @override
   void initState(BuildContext context) {}
@@ -31,16 +29,42 @@ class ReporteModel extends FlutterFlowModel<ReporteWidget> {
   @override
   void dispose() {
     unfocusNode.dispose();
-    fullNameFocusNode1?.dispose();
-    fullNameTextController1?.dispose();
+    resumenFocusNode?.dispose();
+    resumenTextController?.dispose();
 
-    fullNameFocusNode2?.dispose();
-    fullNameTextController2?.dispose();
+    idFocusNode?.dispose();
+    idTextController?.dispose();
 
-    phoneNumberFocusNode?.dispose();
-    phoneNumberTextController?.dispose();
-
-    descriptionFocusNode?.dispose();
-    descriptionTextController?.dispose();
+    nombreFocusNode?.dispose();
+    nombreTextController?.dispose();
   }
+}
+class ReporteController extends GetxController {
+  final _score = 0.obs;
+
+  final RxList<Reportes> _reports = <Reportes>[].obs;
+  final UCUseCase userUseCase = Get.find();
+
+  int get score => _score.value;
+  List<Reportes> get reports => _reports;
+
+  @override
+  void onInit() {
+    getReports();
+    super.onInit();
+  }
+
+  getReports() async {
+    logInfo("Getting reports");
+    _reports.value = await userUseCase.getReports();
+  }
+
+  addReport(Reportes report) async {
+    logInfo("Add report");
+    await userUseCase.addReport(report);
+    getReports();
+  }
+  // void simulateProcess() async {
+  //   await userUseCase.simulateProcess();
+  // }
 }

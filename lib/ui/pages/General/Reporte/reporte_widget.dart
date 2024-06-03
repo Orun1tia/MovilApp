@@ -1,5 +1,7 @@
+import 'package:flutter_application_1/domain/models/report.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../controllers/reporte_model.dart';
 export '../../../controllers/reporte_model.dart';
@@ -15,6 +17,8 @@ class _ReporteWidgetState extends State<ReporteWidget> {
   late ReporteModel _model;
   String _horainicio = 'Hora inicio';
   String _horafinal = 'Hora final';
+  ReporteController rc = Get.find();
+   String? nombreP = Get.arguments as String?;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -22,18 +26,15 @@ class _ReporteWidgetState extends State<ReporteWidget> {
     super.initState();
     _model = createModel(context, () => ReporteModel());
 
-    _model.fullNameTextController1 ??= TextEditingController();
-    _model.fullNameFocusNode1 ??= FocusNode();
-    _model.fullNameFocusNode1!.addListener(() => setState(() {}));
-    _model.fullNameTextController2 ??= TextEditingController();
-    _model.fullNameFocusNode2 ??= FocusNode();
-    _model.fullNameFocusNode2!.addListener(() => setState(() {}));
-    _model.phoneNumberTextController ??= TextEditingController();
-    _model.phoneNumberFocusNode ??= FocusNode();
-    _model.phoneNumberFocusNode!.addListener(() => setState(() {}));
-    _model.descriptionTextController ??= TextEditingController();
-    _model.descriptionFocusNode ??= FocusNode();
-    _model.descriptionFocusNode!.addListener(() => setState(() {}));
+    _model.nombreTextController ??= TextEditingController();
+    _model.nombreFocusNode ??= FocusNode();
+    _model.nombreFocusNode!.addListener(() => setState(() {}));
+    _model.idTextController ??= TextEditingController();
+    _model.idFocusNode ??= FocusNode();
+    _model.idFocusNode!.addListener(() => setState(() {}));
+    _model.resumenTextController ??= TextEditingController();
+    _model.resumenFocusNode ??= FocusNode();
+    _model.resumenFocusNode!.addListener(() => setState(() {}));
   }
 
   @override
@@ -87,9 +88,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                           color: Color(0xFF15161E),
                           size: 24.0,
                         ),
-                        onPressed: () async {
-
-                        },
+                        onPressed: () => Get.back(),
                       ),
                     ),
                   ],
@@ -119,8 +118,8 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                   children: [
                                     TextFormField(
                                       controller:
-                                          _model.fullNameTextController1,
-                                      focusNode: _model.fullNameFocusNode1,
+                                          _model.nombreTextController,
+                                      focusNode: _model.nombreFocusNode,
                                       autofocus: true,
                                       textCapitalization:
                                           TextCapitalization.words,
@@ -187,7 +186,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         filled: true,
-                                        fillColor: (_model.fullNameFocusNode1
+                                        fillColor: (_model.nombreFocusNode
                                                     ?.hasFocus ??
                                                 false)
                                             ? Color.fromARGB(255, 255, 255, 255)
@@ -205,14 +204,12 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                           ),
                                       cursorColor:
                                            const Color(0xFFCD983A),
-                                      validator: _model
-                                          .fullNameTextController1Validator
-                                          .asValidator(context),
+
                                     ),
                                     TextFormField(
                                       controller:
-                                          _model.fullNameTextController2,
-                                      focusNode: _model.fullNameFocusNode2,
+                                          _model.idTextController,
+                                      focusNode: _model.idFocusNode,
                                       autofocus: true,
                                       textCapitalization:
                                           TextCapitalization.words,
@@ -279,7 +276,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         filled: true,
-                                        fillColor: (_model.fullNameFocusNode2
+                                        fillColor: (_model.idFocusNode
                                                     ?.hasFocus ??
                                                 false)
                                             ? Color.fromARGB(255, 255, 255, 255)
@@ -297,9 +294,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                           ),
                                       cursorColor:
                                            const Color(0xFFCD983A),
-                                      validator: _model
-                                          .fullNameTextController2Validator
-                                          .asValidator(context),
+    
                                     ),
                                     Padding(
                                       padding: const EdgeInsetsDirectional.fromSTEB(
@@ -481,8 +476,8 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                           0.0, 6.0, 0.0, 0.0),
                                       child: TextFormField(
                                         controller:
-                                            _model.descriptionTextController,
-                                        focusNode: _model.descriptionFocusNode,
+                                            _model.resumenTextController,
+                                        focusNode: _model.resumenFocusNode,
                                         autofocus: true,
                                         textCapitalization:
                                             TextCapitalization.words,
@@ -556,7 +551,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                           ),
                                           filled: true,
                                           fillColor: (_model
-                                                      .descriptionFocusNode
+                                                      .resumenFocusNode
                                                       ?.hasFocus ??
                                                   false)
                                               ? Color.fromARGB(255, 255, 255, 255)
@@ -580,9 +575,6 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                         minLines: 8,
                                         cursorColor:
                                              const Color(0xFFCD983A),
-                                        validator: _model
-                                            .descriptionTextControllerValidator
-                                            .asValidator(context),
                                       ),
                                     ),
                                   ]
@@ -609,10 +601,20 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                           16.0, 12.0, 16.0, 12.0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          if (_model.formKey.currentState == null ||
-                              !_model.formKey.currentState!.validate()) {
-                            return;
-                          }
+                          await rc.addReport(Reportes(
+                                         id: randomInteger(0, 999), 
+                                            horaI: _horainicio, 
+                                            horaF: _horafinal, 
+                                            nombreCliente: _model.nombreTextController.text, 
+                                            idCliente:int.tryParse(
+                                                _model.idTextController.text) ??
+                                            0, 
+                                            resumen: _model.resumenTextController.text,
+                                             calificacion: 0, 
+                                             nombreUS: nombreP.toString(),
+                                       
+                                      
+                                      ));
                         },
                         text: 'Enviar reporte',
                         options: FFButtonOptions(

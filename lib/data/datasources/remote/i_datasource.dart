@@ -12,7 +12,7 @@ class IUserDataSource{
   final http.Client httpClient;
   final String apiKeyUser = '0QSKzi';
   final String apiKeyClient = 'N9pMJ6';
-  final String apiKeyReport = '7ZRgRY';
+  final String apiKeyReport = 'ICID3B';
 
   IUserDataSource({http.Client? client}) : httpClient = client ?? http.Client();
 

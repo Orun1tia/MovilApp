@@ -18,9 +18,10 @@ class LoginWidget extends StatefulWidget {
 class _LoginWidgetState extends State<LoginWidget>
     with TickerProviderStateMixin {
   late LoginModel _model;
-
+  LoginController lc = Get.find();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
+  var index = 0;
+  var log = 0;
   final animationsMap = <String, AnimationInfo>{};
 
   @override
@@ -81,6 +82,7 @@ class _LoginWidgetState extends State<LoginWidget>
 
   @override
   Widget build(BuildContext context) {
+    String name = 'Coordinador';
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -367,7 +369,25 @@ class _LoginWidgetState extends State<LoginWidget>
                                     0.0, 0.0, 0.0, 16.0),
                                 child: FFButtonWidget(
                                   onPressed: () => {
-                                    if (_model.emailAddressTextController
+                                    for (var user in lc.users)
+                                      {
+                                        if (user.email.contains(_model
+                                                .emailAddressTextController
+                                                .text) &&
+                                            user.password.toString().contains(
+                                                _model.passwordTextController
+                                                    .text))
+                                          {
+                                          log = 1,
+                                          name = user.nombre
+                                          },
+                                      },
+                                    if (log == 1)
+                                      {
+                                        Navigator.pushNamed(context, '/soporte',
+                                            arguments: name)
+                                      }
+                                    else if (_model.emailAddressTextController
                                                 .text ==
                                             'admin' &&
                                         _model.passwordTextController.text ==
@@ -382,7 +402,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                 'Usuario o contraseña incorrectos'),
                                           ),
                                         )
-                                      }
+                                      },
                                   },
                                   text: 'Iniciar sesion',
                                   options: FFButtonOptions(

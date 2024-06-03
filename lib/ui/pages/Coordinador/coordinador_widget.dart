@@ -1,3 +1,4 @@
+import 'package:flutter_application_1/domain/models/report.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ui/controllers/coordinador_model.dart';
@@ -12,10 +13,58 @@ class PrincipalUcWidget extends StatefulWidget {
 }
 
 class _PrincipalUcWidgetState extends State<PrincipalUcWidget>
-  with TickerProviderStateMixin {
+    with TickerProviderStateMixin {
+
+
+int punt = 0;
+ UCController uc = Get.find();
+  void _decrementCounter(Reportes reporte) async {
+    if (punt > 0) {
+      setState(() {
+        punt--;
+      });
+      // Llamar a updateReport aquí
+      await uc.updateReport(Reportes(
+        id: reporte.id,
+        horaI: reporte.horaI,
+        horaF: reporte.horaF,
+        nombreCliente: reporte.nombreCliente,
+        calificacion: punt,
+        nombreUS: reporte.nombreUS,
+        idCliente: reporte.idCliente,
+        resumen: reporte.resumen,
+      ));
+    }else{
+      setState(() {
+      });
+    }
+  }
+
+  void _incrementCounter(Reportes reporte) async {
+    if (punt < 5) {
+      setState(() {
+        punt++;
+      });
+      // Llamar a updateReport aquí
+      await uc.updateReport(Reportes(
+        id: reporte.id,
+        horaI: reporte.horaI,
+        horaF: reporte.horaF,
+        nombreCliente: reporte.nombreCliente,
+        calificacion: punt,
+        nombreUS: reporte.nombreUS,
+        idCliente: reporte.idCliente,
+        resumen: reporte.resumen,
+      ));
+    }else{
+      setState(() {
+      });
+    }
+    }
+
+
   late PrincipalUcModel _model;
   int _showListView = 1;
-  UCController uc = Get.find();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -31,6 +80,8 @@ class _PrincipalUcWidgetState extends State<PrincipalUcWidget>
     super.dispose();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     var a = uc.users.length;
@@ -43,14 +94,23 @@ class _PrincipalUcWidgetState extends State<PrincipalUcWidget>
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => Get.toNamed('/crearsoporte'),
-          backgroundColor: const Color(0xFFCD983A),
-          elevation: 8.0,
-          child: Icon(
-            Icons.add,
-            color: FlutterFlowTheme.of(context).info,
-            size: 24.0,
+        floatingActionButton: Visibility(
+          visible: _showListView != 3,
+          child: FloatingActionButton(
+            onPressed: () {
+              if (_showListView == 1) {
+                Navigator.pushNamed(context, '/adminsoporte', arguments: null);
+              } else if (_showListView == 2) {
+                Navigator.pushNamed(context, '/admincliente', arguments: null);
+              }
+            },
+            backgroundColor: const Color(0xFFCD983A),
+            elevation: 8.0,
+            child: Icon(
+              Icons.add,
+              color: FlutterFlowTheme.of(context).info,
+              size: 24.0,
+            ),
           ),
         ),
         body: Row(
@@ -873,8 +933,8 @@ class _PrincipalUcWidgetState extends State<PrincipalUcWidget>
                                                         Navigator.pushNamed(
                                                           context,
                                                           '/admincliente',
-                                                          arguments:
-                                                              cliente, // Envía un parámetro aquí
+                                                          arguments: cliente
+                                                              .id, // Envía un parámetro aquí
                                                         );
                                                       },
                                                     ),
@@ -928,14 +988,12 @@ class _PrincipalUcWidgetState extends State<PrincipalUcWidget>
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     var reporte = uc.reports[index];
-                                    var client = reporte.cliente;
-                                    var sup = reporte.soporte;
-                                    var name = reporte.id;
+                                    var punt = reporte.calificacion;
                                     return Padding(
                                         padding: const EdgeInsets.all(10.0),
                                         child: Container(
                                           width: double.infinity,
-                                          height: 140.0,
+                                          height: reporte.resumen.length/5 + 160,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryBackground,
@@ -982,7 +1040,7 @@ class _PrincipalUcWidgetState extends State<PrincipalUcWidget>
                                                                 .fromSTEB(0.0,
                                                                 0.0, 0.0, 8.0),
                                                         child: Text(
-                                                          'Reporte # $name',
+                                                          'Reporte # ${reporte.id}',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .titleSmall
@@ -998,7 +1056,7 @@ class _PrincipalUcWidgetState extends State<PrincipalUcWidget>
                                                         ),
                                                       ),
                                                       Text(
-                                                        reporte.fecha,
+                                                        '${reporte.horaI} - ${reporte.horaF}',
                                                         style: FlutterFlowTheme
                                                                 .of(context)
                                                             .bodySmall
@@ -1016,7 +1074,7 @@ class _PrincipalUcWidgetState extends State<PrincipalUcWidget>
                                                                 .fromSTEB(0.0,
                                                                 8.0, 0.0, 0.0),
                                                         child: Text(
-                                                          'cliente: $client',
+                                                          'cliente: ${reporte.nombreCliente}',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .labelMedium
@@ -1034,7 +1092,7 @@ class _PrincipalUcWidgetState extends State<PrincipalUcWidget>
                                                                 .fromSTEB(0.0,
                                                                 8.0, 0.0, 0.0),
                                                         child: Text(
-                                                          'Soporte: $sup',
+                                                          'soporte: ${reporte.nombreUS}',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .labelMedium
@@ -1046,6 +1104,31 @@ class _PrincipalUcWidgetState extends State<PrincipalUcWidget>
                                                               ),
                                                         ),
                                                       ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(0.0,
+                                                                8.0, 0.0, 0.0),
+                                                        child: ConstrainedBox(
+                                                          constraints:
+                                                              BoxConstraints(
+                                                            maxWidth:
+                                                                500.0, // Cambia esto al ancho máximo deseado
+                                                          ),
+                                                          child: Text(
+                                                            'resumen: ${reporte.resumen}',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .labelMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      )
                                                     ],
                                                   ),
                                                 ),
@@ -1058,17 +1141,15 @@ class _PrincipalUcWidgetState extends State<PrincipalUcWidget>
                                                       borderWidth: 1.0,
                                                       buttonSize: 40.0,
                                                       icon: Icon(
-                                                        Icons.edit_outlined,
+                                                        Icons
+                                                            .arrow_back_ios_new,
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .secondaryText,
                                                         size: 20.0,
                                                       ),
-                                                      onPressed: () {
-                                                        print(
-                                                            'IconButton pressed ...');
-                                                      },
+                                                      onPressed: () => _decrementCounter(reporte),
                                                     ),
                                                     const Padding(
                                                         padding:
@@ -1076,7 +1157,31 @@ class _PrincipalUcWidgetState extends State<PrincipalUcWidget>
                                                                 .fromSTEB(
                                                                     0.0,
                                                                     0.0,
-                                                                    10,
+                                                                    5.0,
+                                                                    0.0)),
+                                                    Text(
+                                                      '$punt',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleLarge
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryText,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                    ),
+                                                    const Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    5.0,
+                                                                    0.0,
+                                                                    0.0,
                                                                     0.0)),
                                                     FlutterFlowIconButton(
                                                       borderColor:
@@ -1084,17 +1189,15 @@ class _PrincipalUcWidgetState extends State<PrincipalUcWidget>
                                                       borderRadius: 30.0,
                                                       borderWidth: 1.0,
                                                       buttonSize: 40.0,
-                                                      icon: const Icon(
-                                                        Icons
-                                                            .delete_outline_rounded,
+                                                      icon: Icon(
+                                                        Icons.arrow_forward_ios,
                                                         color:
-                                                            Color(0xFFE86969),
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
                                                         size: 20.0,
                                                       ),
-                                                      onPressed: () {
-                                                        print(
-                                                            'IconButton pressed ...');
-                                                      },
+                                                      onPressed: () => _incrementCounter(reporte),       
                                                     ),
                                                   ],
                                                 ),

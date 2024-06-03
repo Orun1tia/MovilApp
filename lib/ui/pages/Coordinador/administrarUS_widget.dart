@@ -525,6 +525,7 @@ class _AdministrarUSWidgetState extends State<AdministrarUSWidget>
                                     0.0, 0.0, 0.0, 16.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
+                                    if(usuario != null){
                                       await auc.updateUser(User(
                                         id: int.tryParse(
                                                 _model.idTextController.text) ??
@@ -535,8 +536,24 @@ class _AdministrarUSWidgetState extends State<AdministrarUSWidget>
                                                 .passwordTextController.text) ??
                                             0,
                                         nombre: _model.nameTextController.text,
-                                        reportes: usuario!.reportes,
+                                        reportes: usuario.reportes,
                                       ));
+                                    }else{
+                                      await auc.addUser(User(
+                                         id: int.tryParse(
+                                                _model.idTextController.text) ??
+                                            0,
+                                        email: _model
+                                            .emailAddressTextController.text,
+                                        password: int.tryParse(_model
+                                                .passwordTextController.text) ??
+                                            0,
+                                        nombre: _model.nameTextController.text,
+                                        reportes: 0,
+                                      
+                                      ));
+                                    }
+                                      
                                     
                                      Get.back();
                                   },

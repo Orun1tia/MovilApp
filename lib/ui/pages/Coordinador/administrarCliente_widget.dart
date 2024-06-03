@@ -1,5 +1,7 @@
 // ignore_for_file: unused_import
 
+import 'dart:html';
+
 import 'package:flutter_application_1/domain/models/client.dart';
 import 'package:flutter_application_1/ui/controllers/administrarCliente_model%20.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
@@ -371,7 +373,16 @@ class _AdministrarClienteWidgetState extends State<AdministrarClienteWidget>
                                         context,
                                         '/coordinador',
                                       );
-                                    }
+                                    }else{
+                                    await acs.addClient(Client(
+                                         id: int.tryParse(
+                                                _model.idTextController.text) ??
+                                            0,
+                                        nombre: _model.nameTextController.text, 
+                                        iduser: randomInteger(1, 999).toString(),
+                                      
+                                      ));
+                                  }
                                   },
                                   text: 'Crear miembro',
                                   options: FFButtonOptions(

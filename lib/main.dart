@@ -5,6 +5,8 @@ import 'package:flutter_application_1/domain/repositories/i_user_repository.dart
 import 'package:flutter_application_1/domain/use_case/uc_usecase.dart';
 import 'package:flutter_application_1/ui/controllers/administrarCliente_model%20.dart';
 import 'package:flutter_application_1/ui/controllers/administrarUS_model.dart';
+import 'package:flutter_application_1/ui/controllers/login_model.dart';
+import 'package:flutter_application_1/ui/controllers/reporte_model.dart';
 import 'package:flutter_application_1/ui/pages/Coordinador/administrarUS_widget.dart';
 import 'package:flutter_application_1/ui/pages/General/Login/login_widget.dart';
 import 'package:flutter_application_1/ui/pages/General/Reporte/reporte_widget.dart';
@@ -19,6 +21,9 @@ void main() {
     Get.put(UCUseCase());
     Get.put(AdministrarClienteController());
     Get.put(UCController());
+    Get.put(LoginController());
+    Get.put(USController());
+    Get.put(ReporteController());
     Get.put(AdministrarUSController());
   runApp(MyApp());
 }
@@ -53,7 +58,7 @@ class MyApp extends StatelessWidget {
           name: '/soporte',
           page: () => PrincipalUsWidget(),
           binding: BindingsBuilder(() {
-            Get.lazyPut(() => AdministrarUSModel());
+            Get.lazyPut(() => PrincipalUsModel());
           }),
         ),
         GetPage(

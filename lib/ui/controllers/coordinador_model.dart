@@ -45,17 +45,6 @@ class UCController extends GetxController {
     super.onInit();
   }
 
-  void incrementScore() {
-    if (_score.value < 5) {
-      _score.value++;
-    }
-  }
-
-  void decrementScore() {
-    if (_score.value > 0) {
-      _score.value--;
-    }
-  }
 
   getUsers() async {
     logInfo("Getting users");
@@ -117,7 +106,7 @@ class UCController extends GetxController {
   updateReport(Reportes report) async {
     logInfo("Update report");
     await userUseCase.updateReport(report);
-    getReports();
+    await getReports();
   }
 
   void deleteReport(int id) async {

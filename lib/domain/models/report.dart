@@ -2,39 +2,43 @@ class Reportes {
   Reportes({
     ///id, score, desc, name, horastart, duracipon
     required this.id,
-    required this.fecha,
-    required this.cliente,
-    required this.soporte,
-    required this.reportid,
-    required this.descripcion,
+    required this.horaI,
+    required this.horaF,
+    required this.nombreCliente,
+    required this.idCliente,
+    required this.resumen,
     required this.calificacion,
+    required this.nombreUS,
   });
 
   int id;
-  String fecha;
-  String cliente;
-  String soporte;
-  int reportid;
-  String descripcion;
+  String horaI;
+  String horaF;
+  String nombreCliente;
+  int idCliente;
+  String resumen;
   int calificacion;
+  String nombreUS;
 
   factory Reportes.fromJson(Map<String, dynamic> json) => Reportes(
         id: json["id"],
-        fecha: json["fecha"],
-        cliente: json["cliente"],
-        soporte: json["soporte"],
-        reportid: json["reportid"],
-        descripcion: json["descripcion"],
+        horaI: json["horaI"],
+        horaF: json["horaF"],
+        resumen:  json["resumen"],
+        nombreCliente: json["nombreCliente"],
+        idCliente: json["idCliente"],
         calificacion: json["calificacion"],
+        nombreUS: json["nombreUS"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "fecha": fecha,
-        "cliente": cliente,
-        "soporte": soporte,
-        "reportid": reportid,
-        "descripcion": descripcion,
+        "horaI": horaI,
+        "horaF": horaF,
+        "nombreCliente": nombreCliente,
+        "idCliente": idCliente,
+        "resumen": resumen,
         "calificacion": calificacion,
+        "nombreUS": nombreUS,
       };
 }

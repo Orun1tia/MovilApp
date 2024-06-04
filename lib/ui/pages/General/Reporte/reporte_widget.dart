@@ -1,12 +1,11 @@
-import 'package:flutter_application_1/ui/controllers/administrarUS_model.dart';
-import 'package:flutter_application_1/domain/models/report.dart';
+import 'package:flutter_application_1/ui/controllers/reporte_controller.dart';
 import 'package:flutter_application_1/domain/models/user.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../controllers/reporte_model.dart';
-export '../../../controllers/reporte_model.dart';
+import '../../../models/reporte_model.dart';
+export '../../../models/reporte_model.dart';
 
 class ReporteWidget extends StatefulWidget {
   const ReporteWidget({super.key});
@@ -17,10 +16,9 @@ class ReporteWidget extends StatefulWidget {
 
 class _ReporteWidgetState extends State<ReporteWidget> {
   late ReporteModel _model;
+  final ReporteController controller = Get.put(ReporteController());
   String _horainicio = 'Hora inicio';
   String _horafinal = 'Hora final';
-  ReporteController rc = Get.find();
-  AdministrarUSController auc = Get.find();
   User? userSend = Get.arguments as User?;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -611,25 +609,14 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                           16.0, 12.0, 16.0, 12.0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          await rc.addReport(Reportes(
-                            id: randomInteger(0, 999),
-                            horaI: _horainicio,
-                            horaF: _horafinal,
-                            nombreCliente: _model.nombreTextController.text,
-                            idCliente:
-                                int.tryParse(_model.idTextController.text) ?? 0,
-                            resumen: _model.resumenTextController.text,
-                            calificacion: 0,
-                            nombreUS: userSend!.nombre,
-                          ));
-                          await auc.updateUser(User(
-                            id: userSend!.id,
-                            email: userSend!.email,
-                            password: userSend!.password,
-                            nombre: userSend!.nombre,
-                            reportes: userSend!.reportes + 1,
-                          ));
-                          Get.back(result: 'Reporte enviado');
+                          await controller.addReportAndUpdateUser(
+                            userSend!, // El usuario que quieres actualizar
+                            _model.nombreTextController.text,
+                            _model.idTextController.text,
+                            _model.resumenTextController.text,
+                            _horainicio,
+                            _horafinal,
+                          );
                         },
                         text: 'Enviar reporte',
                         options: FFButtonOptions(

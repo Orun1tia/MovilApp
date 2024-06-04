@@ -2,9 +2,9 @@ import 'package:flutter_application_1/domain/models/user.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_application_1/ui/controllers/administrarUS_model.dart';
+import 'package:flutter_application_1/ui/models/administrarUS_model.dart';
+import 'package:flutter_application_1/ui/controllers/administrarUS_controller.dart';
 import 'package:get/get.dart';
-export 'package:flutter_application_1/ui/controllers/administrarUS_model.dart';
 
 class AdministrarUSWidget extends StatefulWidget {
   const AdministrarUSWidget({super.key});

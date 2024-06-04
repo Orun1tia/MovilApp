@@ -1,15 +1,13 @@
-// ignore_for_file: unused_import
-
 import 'dart:html';
 
 import 'package:flutter_application_1/domain/models/client.dart';
-import 'package:flutter_application_1/ui/controllers/administrarCliente_model%20.dart';
+import 'package:flutter_application_1/ui/models/administrarCliente_model.dart';
+import 'package:flutter_application_1/ui/controllers/administrarcliente_controller.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_application_1/ui/controllers/administrarUS_model.dart';
 import 'package:get/get.dart';
-export 'package:flutter_application_1/ui/controllers/administrarUS_model.dart';
+export 'package:flutter_application_1/ui/models/administrarUS_model.dart';
 
 class AdministrarClienteWidget extends StatefulWidget {
   const AdministrarClienteWidget({super.key});
@@ -22,7 +20,7 @@ class AdministrarClienteWidget extends StatefulWidget {
 class _AdministrarClienteWidgetState extends State<AdministrarClienteWidget>
     with TickerProviderStateMixin {
   late AdministrarClienteModel _model;
-  AdministrarClienteController acs = Get.find();
+  final AdministrarClienteController controller = Get.put(AdministrarClienteController());
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final animationsMap = <String, AnimationInfo>{};
@@ -363,26 +361,12 @@ class _AdministrarClienteWidgetState extends State<AdministrarClienteWidget>
                                     0.0, 0.0, 0.0, 16.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    if (cliente != null) {
-                                      await acs.updateClient(Client(
-                                        id: cliente.id,
-                                        iduser: _model.idTextController.text,
-                                        nombre: _model.nameTextController.text,
-                                      ));
-                                      Get.back(result: "updated");
-                                    }else{
-                                    await acs.addClient(Client(
-                                         id: int.tryParse(
-                                                _model.idTextController.text) ??
-                                            0,
-                                        nombre: _model.nameTextController.text, 
-                                        iduser: randomInteger(1, 999).toString(),
-                                      
-                                      )
-                                      );
-                                  Get.back(result: "created");
-                                  }
-                                  },
+  await controller.addOrUpdateClient(
+    cliente, // Pasar el cliente existente (null si es nuevo)
+    _model.idTextController.text,
+    _model.nameTextController.text,
+  );
+},
                                   text: 'Crear miembro',
                                   options: FFButtonOptions(
                                     width: double.infinity,

@@ -1,28 +1,9 @@
-import 'package:flutterflow_ui/flutterflow_ui.dart';
-import '../pages/Coordinador/coordinador_widget.dart' show PrincipalUcWidget;
-import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
-
 import '../../domain/models/client.dart';
 import '../../domain/models/report.dart';
 import '../../domain/models/user.dart';
 import '../../domain/use_case/uc_usecase.dart';
-
-class PrincipalUcModel extends FlutterFlowModel<PrincipalUcWidget> {
-  ///  State fields for stateful widgets in this page.
-
-  final unfocusNode = FocusNode();
-
-  @override
-  void initState(BuildContext context) {}
-
-  @override
-  void dispose() {
-    unfocusNode.dispose();
-  }
-}
 
 class UCController extends GetxController {
   final _score = 0.obs;

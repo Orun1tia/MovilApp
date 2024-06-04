@@ -1,12 +1,9 @@
 import 'package:flutter_application_1/domain/models/report.dart';
-import 'package:flutter_application_1/ui/controllers/administrarUS_model.dart';
-import 'package:flutter_application_1/ui/pages/Coordinador/administrarCliente_widget.dart';
-import 'package:flutter_application_1/ui/pages/Coordinador/administrarUS_widget.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/ui/controllers/coordinador_model.dart';
+import 'package:flutter_application_1/ui/controllers/coordinador_controller.dart';
+import 'package:flutter_application_1/ui/models/coordinador_model.dart';
 import 'package:get/get.dart';
-export 'package:flutter_application_1/ui/controllers/coordinador_model.dart';
 
 class PrincipalUcWidget extends StatefulWidget {
   const PrincipalUcWidget({super.key});

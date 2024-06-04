@@ -1,9 +1,9 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter_application_1/domain/models/user.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/ui/controllers/soporte_model.dart';
+import 'package:flutter_application_1/ui/models/soporte_model.dart';
+import 'package:flutter_application_1/ui/controllers/soporte_controller.dart';
 import 'package:get/get.dart';
-export 'package:flutter_application_1/ui/controllers/soporte_model.dart';
 
 class PrincipalUsWidget extends StatefulWidget {
   const PrincipalUsWidget({super.key});

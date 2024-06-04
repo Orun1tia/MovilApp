@@ -1,13 +1,10 @@
-// ignore_for_file: unused_import
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_application_1/domain/models/user.dart';
-import 'package:flutter_application_1/ui/pages/Coordinador/coordinador_widget.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
-import 'package:flutter_application_1/ui/controllers/login_model.dart';
+import 'package:flutter_application_1/ui/controllers/login_controller.dart';
+import 'package:flutter_application_1/ui/models/login_model.dart';
 import 'package:get/get.dart';
-export 'package:flutter_application_1/ui/controllers/login_model.dart';
+export 'package:flutter_application_1/ui/controllers/login_controller.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
@@ -19,7 +16,7 @@ class LoginWidget extends StatefulWidget {
 class _LoginWidgetState extends State<LoginWidget>
     with TickerProviderStateMixin {
   late LoginModel _model;
-  LoginController lc = Get.find();
+  final LoginController controller = Get.put(LoginController());
   final scaffoldKey = GlobalKey<ScaffoldState>();
   var index = 0;
   var log = 0;
@@ -28,6 +25,7 @@ class _LoginWidgetState extends State<LoginWidget>
   @override
   void initState() {
     super.initState();
+
     _model = createModel(context, () => LoginModel());
 
     _model.emailAddressTextController ??= TextEditingController();
@@ -83,8 +81,7 @@ class _LoginWidgetState extends State<LoginWidget>
 
   @override
   Widget build(BuildContext context) {
-    User userSend = User(id: 0, email: '', password: 0, nombre: '', reportes: 0);
-      return GestureDetector(
+    return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
           : FocusScope.of(context).unfocus(),
@@ -369,43 +366,10 @@ class _LoginWidgetState extends State<LoginWidget>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 16.0),
                                 child: FFButtonWidget(
-                                  onPressed: () => {
-                                    log = 0,
-                                    for (var user in lc.users)
-                                      {
-                                        if (user.email.contains(_model
-                                                .emailAddressTextController
-                                                .text) &&
-                                            user.password.toString().contains(
-                                                _model.passwordTextController
-                                                    .text))
-                                          {
-                                          log = 1,
-                                          userSend = user
-                                          },
-                                      },
-                                    if (log == 1)
-                                      {
-                                        Navigator.pushNamed(context, '/soporte',
-                                            arguments: userSend)
-                                      }
-                                    else if (_model.emailAddressTextController
-                                                .text ==
-                                            'admin' &&
-                                        _model.passwordTextController.text ==
-                                            'admin')
-                                      {Get.toNamed('/coordinador')}
-                                    else
-                                      {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text(
-                                                'Usuario o contraseña incorrectos'),
-                                          ),
-                                        )
-                                      },
-                                  },
+                                  onPressed: () => controller.login(
+                                    _model.emailAddressTextController.text,
+                                    _model.passwordTextController.text,
+                                  ),
                                   text: 'Iniciar sesion',
                                   options: FFButtonOptions(
                                     width: double.infinity,

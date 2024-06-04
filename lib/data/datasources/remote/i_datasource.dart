@@ -126,7 +126,7 @@ class IUserDataSource{
     );
 
     if (response.statusCode == 200) {
-      //logInfo(response.body);
+      logInfo(response.body);
       return Future.value(true);
     } else {
       logError("Got error code ${response.statusCode}");

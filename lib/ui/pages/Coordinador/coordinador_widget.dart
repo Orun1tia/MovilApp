@@ -1,4 +1,7 @@
 import 'package:flutter_application_1/domain/models/report.dart';
+import 'package:flutter_application_1/ui/controllers/administrarUS_model.dart';
+import 'package:flutter_application_1/ui/pages/Coordinador/administrarCliente_widget.dart';
+import 'package:flutter_application_1/ui/pages/Coordinador/administrarUS_widget.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ui/controllers/coordinador_model.dart';
@@ -14,10 +17,8 @@ class PrincipalUcWidget extends StatefulWidget {
 
 class _PrincipalUcWidgetState extends State<PrincipalUcWidget>
     with TickerProviderStateMixin {
-
-
-int punt = 0;
- UCController uc = Get.find();
+  int punt = 0;
+  UCController uc = Get.find();
   void _decrementCounter(Reportes reporte) async {
     if (punt > 0) {
       setState(() {
@@ -34,9 +35,8 @@ int punt = 0;
         idCliente: reporte.idCliente,
         resumen: reporte.resumen,
       ));
-    }else{
-      setState(() {
-      });
+    } else {
+      setState(() {});
     }
   }
 
@@ -56,12 +56,10 @@ int punt = 0;
         idCliente: reporte.idCliente,
         resumen: reporte.resumen,
       ));
-    }else{
-      setState(() {
-      });
+    } else {
+      setState(() {});
     }
-    }
-
+  }
 
   late PrincipalUcModel _model;
   int _showListView = 1;
@@ -71,6 +69,9 @@ int punt = 0;
   void initState() {
     super.initState();
     _model = createModel(context, () => PrincipalUcModel());
+    uc.getUsers();
+    uc.getClients();
+    uc.getReports();
   }
 
   @override
@@ -79,8 +80,6 @@ int punt = 0;
 
     super.dispose();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -585,7 +584,7 @@ int punt = 0;
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Andrew D.',
+                                      'Admin.',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyLarge
                                           .override(
@@ -647,175 +646,191 @@ int punt = 0;
                                   maxWidth: 1200.0,
                                 ),
                                 decoration: const BoxDecoration(),
-                                child: ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: uc.users.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    var usuario = uc.users[index];
-                                    var num = usuario.reportes;
-                                    return Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Container(
-                                          width: double.infinity,
-                                          height: 100.0,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                blurRadius: 4.0,
-                                                color: Color(0x320E151B),
-                                                offset: Offset(
-                                                  0.0,
-                                                  1.0,
-                                                ),
-                                              )
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(25.0, 8.0, 25.0, 8.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          12.0, 0.0, 0.0, 0.0),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(0.0,
-                                                                0.0, 0.0, 8.0),
-                                                        child: Text(
-                                                          usuario.nombre,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .titleSmall
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Readex Pro',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        usuario.email,
-                                                        style: FlutterFlowTheme
-                                                                .of(context)
-                                                            .bodySmall
-                                                            .override(
-                                                              fontFamily:
-                                                                  'Readex Pro',
-                                                              fontSize: 14.0,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                            ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(0.0,
-                                                                8.0, 0.0, 0.0),
-                                                        child: Text(
-                                                          'Reportes: $num',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .labelMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Readex Pro',
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Row(
+                                child: Obx(() => ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: uc.users.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        var usuario = uc.users[index];
+                                        var num = usuario.reportes;
+                                        return Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Container(
+                                              width: double.infinity,
+                                              height: 100.0,
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                    blurRadius: 4.0,
+                                                    color: Color(0x320E151B),
+                                                    offset: Offset(
+                                                      0.0,
+                                                      1.0,
+                                                    ),
+                                                  )
+                                                ],
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                        25.0, 8.0, 25.0, 8.0),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
-                                                    FlutterFlowIconButton(
-                                                      borderColor:
-                                                          Colors.transparent,
-                                                      borderRadius: 30.0,
-                                                      borderWidth: 1.0,
-                                                      buttonSize: 40.0,
-                                                      icon: Icon(
-                                                        Icons.edit_outlined,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(12.0,
+                                                              0.0, 0.0, 0.0),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    8.0),
+                                                            child: Text(
+                                                              usuario.nombre,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .titleSmall
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Readex Pro',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryText,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            usuario.email,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodySmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                    0.0,
+                                                                    8.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                            child: Text(
+                                                              'Reportes: $num',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .labelMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Readex Pro',
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        FlutterFlowIconButton(
+                                                          borderColor: Colors
+                                                              .transparent,
+                                                          borderRadius: 30.0,
+                                                          borderWidth: 1.0,
+                                                          buttonSize: 40.0,
+                                                          icon: Icon(
+                                                            Icons.edit_outlined,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
                                                                 .secondaryText,
-                                                        size: 20.0,
-                                                      ),
-                                                      onPressed: () {
-                                                        Navigator.pushNamed(
-                                                          context,
-                                                          '/adminsoporte',
-                                                          arguments:
-                                                              usuario, // Envía un parámetro aquí
-                                                        );
-                                                      },
-                                                    ),
-                                                    const Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    10,
-                                                                    0.0)),
-                                                    FlutterFlowIconButton(
-                                                      borderColor:
-                                                          Colors.transparent,
-                                                      borderRadius: 30.0,
-                                                      borderWidth: 1.0,
-                                                      buttonSize: 40.0,
-                                                      icon: const Icon(
-                                                        Icons
-                                                            .delete_outline_rounded,
-                                                        color:
-                                                            Color(0xFFE86969),
-                                                        size: 20.0,
-                                                      ),
-                                                      onPressed: () async {
-                                                        await uc.deleteUser(
-                                                            usuario.id);
-                                                        setState(() {});
-                                                      },
-                                                    ),
+                                                            size: 20.0,
+                                                          ),
+                                                          onPressed: () async {
+                                                            final result =
+                                                                await Get.toNamed(
+                                                                    '/adminsoporte',
+                                                                    arguments:
+                                                                        usuario);
+                                                            if (result ==
+                                                                    'updated' ||
+                                                                result ==
+                                                                    'created') {
+                                                              await uc
+                                                                  .getUsers();
+                                                            }
+                                                          },
+                                                        ),
+                                                        const Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        10,
+                                                                        0.0)),
+                                                        FlutterFlowIconButton(
+                                                          borderColor: Colors
+                                                              .transparent,
+                                                          borderRadius: 30.0,
+                                                          borderWidth: 1.0,
+                                                          buttonSize: 40.0,
+                                                          icon: const Icon(
+                                                            Icons
+                                                                .delete_outline_rounded,
+                                                            color: Color(
+                                                                0xFFE86969),
+                                                            size: 20.0,
+                                                          ),
+                                                          onPressed: () async {
+                                                            await uc.deleteUser(
+                                                                usuario.id);
+                                                            setState(() {});
+                                                          },
+                                                        ),
+                                                      ],
+                                                    )
                                                   ],
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ));
-                                  },
-                                ),
+                                                ),
+                                              ),
+                                            ));
+                                      },
+                                    )),
                               ),
                             if (_showListView == 2)
                               Container(
@@ -823,156 +838,168 @@ int punt = 0;
                                   maxWidth: 1200.0,
                                 ),
                                 decoration: const BoxDecoration(),
-                                child: ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: uc.users.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    var cliente = uc.clients[index];
-                                    return Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Container(
-                                          width: double.infinity,
-                                          height: 100.0,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                blurRadius: 4.0,
-                                                color: Color(0x320E151B),
-                                                offset: Offset(
-                                                  0.0,
-                                                  1.0,
-                                                ),
-                                              )
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(25.0, 8.0, 25, 8.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(
-                                                          12.0, 0.0, 0.0, 0.0),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(0.0,
-                                                                0.0, 0.0, 8.0),
-                                                        child: Text(
-                                                          cliente.nombre,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .titleSmall
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Readex Pro',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        cliente.iduser,
-                                                        style: FlutterFlowTheme
-                                                                .of(context)
-                                                            .bodySmall
-                                                            .override(
-                                                              fontFamily:
-                                                                  'Readex Pro',
-                                                              fontSize: 14.0,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                            ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    FlutterFlowIconButton(
-                                                      borderColor:
-                                                          Colors.transparent,
-                                                      borderRadius: 30.0,
-                                                      borderWidth: 1.0,
-                                                      buttonSize: 40.0,
-                                                      icon: Icon(
-                                                        Icons.edit_outlined,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        size: 20.0,
-                                                      ),
-                                                      onPressed: () {
-                                                        Navigator.pushNamed(
-                                                          context,
-                                                          '/admincliente',
-                                                          arguments: cliente
-                                                              .id, // Envía un parámetro aquí
-                                                        );
-                                                      },
+                                child: Obx(() => ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: uc.clients.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        var cliente = uc.clients[index];
+                                        return Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Container(
+                                              width: double.infinity,
+                                              height: 100.0,
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                    blurRadius: 4.0,
+                                                    color: Color(0x320E151B),
+                                                    offset: Offset(
+                                                      0.0,
+                                                      1.0,
                                                     ),
-                                                    const Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
+                                                  )
+                                                ],
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                        25.0, 8.0, 25, 8.0),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(12.0,
+                                                              0.0, 0.0, 0.0),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
                                                                     0.0,
                                                                     0.0,
-                                                                    10,
-                                                                    0.0)),
-                                                    FlutterFlowIconButton(
-                                                      borderColor:
-                                                          Colors.transparent,
-                                                      borderRadius: 30.0,
-                                                      borderWidth: 1.0,
-                                                      buttonSize: 40.0,
-                                                      icon: const Icon(
-                                                        Icons
-                                                            .delete_outline_rounded,
-                                                        color:
-                                                            Color(0xFFE86969),
-                                                        size: 20.0,
+                                                                    0.0,
+                                                                    8.0),
+                                                            child: Text(
+                                                              cliente.nombre,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .titleSmall
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Readex Pro',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryText,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            cliente.iduser,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodySmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                      onPressed: () async {
-                                                        await uc.deleteClient(
-                                                            cliente.id);
-                                                        setState(() {});
-                                                      },
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        FlutterFlowIconButton(
+                                                          borderColor: Colors
+                                                              .transparent,
+                                                          borderRadius: 30.0,
+                                                          borderWidth: 1.0,
+                                                          buttonSize: 40.0,
+                                                          icon: Icon(
+                                                            Icons.edit_outlined,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryText,
+                                                            size: 20.0,
+                                                          ),
+                                                          onPressed: () async {
+                                                            final result =
+                                                                await Get.toNamed(
+                                                                    '/admincliente',
+                                                                    arguments:
+                                                                        cliente);
+                                                            if (result ==
+                                                                'updated') {
+                                                              await uc
+                                                                  .getUsers(); // Refrescar usuarios después de la edición
+                                                            }
+                                                          },
+                                                        ),
+                                                        const Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        10,
+                                                                        0.0)),
+                                                        FlutterFlowIconButton(
+                                                          borderColor: Colors
+                                                              .transparent,
+                                                          borderRadius: 30.0,
+                                                          borderWidth: 1.0,
+                                                          buttonSize: 40.0,
+                                                          icon: const Icon(
+                                                            Icons
+                                                                .delete_outline_rounded,
+                                                            color: Color(
+                                                                0xFFE86969),
+                                                            size: 20.0,
+                                                          ),
+                                                          onPressed: () async {
+                                                            await uc
+                                                                .deleteClient(
+                                                                    cliente.id);
+                                                            setState(() {});
+                                                          },
+                                                        ),
+                                                      ],
                                                     ),
                                                   ],
                                                 ),
-                                              ],
-                                            ),
-                                          ),
-                                        ));
-                                  },
-                                ),
+                                              ),
+                                            ));
+                                      },
+                                    )),
                               ),
                             if (_showListView == 3)
                               Container(
@@ -987,13 +1014,15 @@ int punt = 0;
                                   itemCount: uc.reports.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    var reporte = uc.reports[index];
+                                    var reporte = uc
+                                        .reports[uc.reports.length - 1 - index];
                                     var punt = reporte.calificacion;
                                     return Padding(
                                         padding: const EdgeInsets.all(10.0),
                                         child: Container(
                                           width: double.infinity,
-                                          height: reporte.resumen.length/5 + 160,
+                                          height:
+                                              reporte.resumen.length / 5 + 160,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryBackground,
@@ -1111,7 +1140,7 @@ int punt = 0;
                                                                 8.0, 0.0, 0.0),
                                                         child: ConstrainedBox(
                                                           constraints:
-                                                              BoxConstraints(
+                                                              const BoxConstraints(
                                                             maxWidth:
                                                                 500.0, // Cambia esto al ancho máximo deseado
                                                           ),
@@ -1149,7 +1178,9 @@ int punt = 0;
                                                                 .secondaryText,
                                                         size: 20.0,
                                                       ),
-                                                      onPressed: () => _decrementCounter(reporte),
+                                                      onPressed: () =>
+                                                          _decrementCounter(
+                                                              reporte),
                                                     ),
                                                     const Padding(
                                                         padding:
@@ -1197,7 +1228,9 @@ int punt = 0;
                                                                 .secondaryText,
                                                         size: 20.0,
                                                       ),
-                                                      onPressed: () => _incrementCounter(reporte),       
+                                                      onPressed: () =>
+                                                          _incrementCounter(
+                                                              reporte),
                                                     ),
                                                   ],
                                                 ),

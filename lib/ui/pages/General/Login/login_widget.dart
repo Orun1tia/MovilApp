@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_application_1/domain/models/user.dart';
 import 'package:flutter_application_1/ui/pages/Coordinador/coordinador_widget.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter_application_1/ui/controllers/login_model.dart';
@@ -82,8 +83,8 @@ class _LoginWidgetState extends State<LoginWidget>
 
   @override
   Widget build(BuildContext context) {
-    String name = 'Coordinador';
-    return GestureDetector(
+    User userSend = User(id: 0, email: '', password: 0, nombre: '', reportes: 0);
+      return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
           : FocusScope.of(context).unfocus(),
@@ -369,6 +370,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                     0.0, 0.0, 0.0, 16.0),
                                 child: FFButtonWidget(
                                   onPressed: () => {
+                                    log = 0,
                                     for (var user in lc.users)
                                       {
                                         if (user.email.contains(_model
@@ -379,13 +381,13 @@ class _LoginWidgetState extends State<LoginWidget>
                                                     .text))
                                           {
                                           log = 1,
-                                          name = user.nombre
+                                          userSend = user
                                           },
                                       },
                                     if (log == 1)
                                       {
                                         Navigator.pushNamed(context, '/soporte',
-                                            arguments: name)
+                                            arguments: userSend)
                                       }
                                     else if (_model.emailAddressTextController
                                                 .text ==

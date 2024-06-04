@@ -369,10 +369,7 @@ class _AdministrarClienteWidgetState extends State<AdministrarClienteWidget>
                                         iduser: _model.idTextController.text,
                                         nombre: _model.nameTextController.text,
                                       ));
-                                      Navigator.pushNamed(
-                                        context,
-                                        '/coordinador',
-                                      );
+                                      Get.back(result: "updated");
                                     }else{
                                     await acs.addClient(Client(
                                          id: int.tryParse(
@@ -381,7 +378,9 @@ class _AdministrarClienteWidgetState extends State<AdministrarClienteWidget>
                                         nombre: _model.nameTextController.text, 
                                         iduser: randomInteger(1, 999).toString(),
                                       
-                                      ));
+                                      )
+                                      );
+                                  Get.back(result: "created");
                                   }
                                   },
                                   text: 'Crear miembro',

@@ -1,4 +1,5 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
+import 'package:flutter_application_1/domain/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ui/controllers/soporte_model.dart';
 import 'package:get/get.dart';
@@ -14,13 +15,14 @@ class PrincipalUsWidget extends StatefulWidget {
 class _PrincipalUsWidgetState extends State<PrincipalUsWidget> {
   late PrincipalUsModel _model;
   USController usc = Get.find();
-  String? nombreP = Get.arguments as String?;
+  User? userSend= Get.arguments as User?;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => PrincipalUsModel());
+    usc.getReports();
   }
 
   @override
@@ -32,7 +34,7 @@ class _PrincipalUsWidgetState extends State<PrincipalUsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var filteredReports = usc.reports.where((report) => report.nombreUS == nombreP).toList();
+    var filteredReports = usc.reports.where((report) => report.nombreUS == userSend?.nombre).toList();
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -41,7 +43,7 @@ class _PrincipalUsWidgetState extends State<PrincipalUsWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         floatingActionButton: FloatingActionButton(
-          onPressed: () => Navigator.pushNamed(context, '/reporte', arguments: nombreP),
+          onPressed: () => Navigator.pushNamed(context, '/reporte', arguments: userSend),
           backgroundColor: const Color(0xFFCD983A),
           elevation: 8.0,
           child: Icon(
@@ -239,7 +241,7 @@ class _PrincipalUsWidgetState extends State<PrincipalUsWidget> {
                                                                 8.0, 0.0, 0.0),
                                                         child: ConstrainedBox(
                                                           constraints:
-                                                              BoxConstraints(
+                                                              const BoxConstraints(
                                                             maxWidth:
                                                                 500.0, // Cambia esto al ancho máximo deseado
                                                           ),

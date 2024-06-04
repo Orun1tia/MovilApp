@@ -1,4 +1,6 @@
+import 'package:flutter_application_1/ui/controllers/administrarUS_model.dart';
 import 'package:flutter_application_1/domain/models/report.dart';
+import 'package:flutter_application_1/domain/models/user.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,7 +20,8 @@ class _ReporteWidgetState extends State<ReporteWidget> {
   String _horainicio = 'Hora inicio';
   String _horafinal = 'Hora final';
   ReporteController rc = Get.find();
-   String? nombreP = Get.arguments as String?;
+  AdministrarUSController auc = Get.find();
+  User? userSend = Get.arguments as User?;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -75,8 +78,8 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 15.0, 8.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 30.0, 15.0, 8.0),
                       child: FlutterFlowIconButton(
                         borderColor: const Color(0xFFE5E7EB),
                         borderRadius: 12.0,
@@ -117,8 +120,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     TextFormField(
-                                      controller:
-                                          _model.nombreTextController,
+                                      controller: _model.nombreTextController,
                                       focusNode: _model.nombreFocusNode,
                                       autofocus: true,
                                       textCapitalization:
@@ -162,8 +164,8 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: const Color(0xFFCD983A),
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFFCD983A),
                                             width: 2.0,
                                           ),
                                           borderRadius:
@@ -186,13 +188,15 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         filled: true,
-                                        fillColor: (_model.nombreFocusNode
-                                                    ?.hasFocus ??
-                                                false)
-                                            ? Color.fromARGB(255, 255, 255, 255)
-                                            : Colors.white,
+                                        fillColor:
+                                            (_model.nombreFocusNode?.hasFocus ??
+                                                    false)
+                                                ? const Color.fromARGB(
+                                                    255, 255, 255, 255)
+                                                : Colors.white,
                                         contentPadding:
-                                            const EdgeInsetsDirectional.fromSTEB(
+                                            const EdgeInsetsDirectional
+                                                .fromSTEB(
                                                 16.0, 20.0, 16.0, 20.0),
                                       ),
                                       style: FlutterFlowTheme.of(context)
@@ -202,13 +206,10 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                             fontSize: 16.0,
                                             letterSpacing: 0.0,
                                           ),
-                                      cursorColor:
-                                           const Color(0xFFCD983A),
-
+                                      cursorColor: const Color(0xFFCD983A),
                                     ),
                                     TextFormField(
-                                      controller:
-                                          _model.idTextController,
+                                      controller: _model.idTextController,
                                       focusNode: _model.idFocusNode,
                                       autofocus: true,
                                       textCapitalization:
@@ -252,8 +253,8 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color:  const Color(0xFFCD983A) ,
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFFCD983A),
                                             width: 2.0,
                                           ),
                                           borderRadius:
@@ -276,13 +277,15 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         filled: true,
-                                        fillColor: (_model.idFocusNode
-                                                    ?.hasFocus ??
+                                        fillColor: (_model
+                                                    .idFocusNode?.hasFocus ??
                                                 false)
-                                            ? Color.fromARGB(255, 255, 255, 255)
+                                            ? const Color.fromARGB(
+                                                255, 255, 255, 255)
                                             : Colors.white,
                                         contentPadding:
-                                            const EdgeInsetsDirectional.fromSTEB(
+                                            const EdgeInsetsDirectional
+                                                .fromSTEB(
                                                 16.0, 20.0, 16.0, 20.0),
                                       ),
                                       style: FlutterFlowTheme.of(context)
@@ -292,13 +295,12 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                             fontSize: 16.0,
                                             letterSpacing: 0.0,
                                           ),
-                                      cursorColor:
-                                           const Color(0xFFCD983A),
-    
+                                      cursorColor: const Color(0xFFCD983A),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 8.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 8.0, 0.0, 0.0),
                                       child: Text(
                                         'Hora inicio - final',
                                         style: FlutterFlowTheme.of(context)
@@ -319,9 +321,9 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                       children: [
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 12.0, 16.0, 12.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(
+                                                0.0, 12.0, 16.0, 12.0),
                                             child: FFButtonWidget(
                                               onPressed: () async {
                                                 final _datePickedTime =
@@ -330,7 +332,6 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                                   initialTime:
                                                       TimeOfDay.fromDateTime(
                                                           getCurrentTimestamp),
-                                                 
                                                 );
                                                 if (_datePickedTime != null) {
                                                   safeSetState(() {
@@ -342,7 +343,9 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                                       _datePickedTime.hour,
                                                       _datePickedTime.minute,
                                                     );
-                                                    _horainicio = _datePickedTime.format(context);
+                                                    _horainicio =
+                                                        _datePickedTime
+                                                            .format(context);
                                                   });
                                                 }
                                               },
@@ -350,13 +353,14 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                               options: FFButtonOptions(
                                                 width: double.infinity,
                                                 height: 48.0,
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         24.0, 0.0, 24.0, 0.0),
                                                 iconPadding:
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(
-                                                            0.0, 0.0, 0.0, 0.0),
+                                                        0.0, 0.0, 0.0, 0.0),
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryBackground,
@@ -390,9 +394,9 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                         ),
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 12.0, 16.0, 12.0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(
+                                                0.0, 12.0, 16.0, 12.0),
                                             child: FFButtonWidget(
                                               onPressed: () async {
                                                 final _datePickedTime =
@@ -401,7 +405,6 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                                   initialTime:
                                                       TimeOfDay.fromDateTime(
                                                           getCurrentTimestamp),
-                                                 
                                                 );
                                                 if (_datePickedTime != null) {
                                                   safeSetState(() {
@@ -413,7 +416,8 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                                       _datePickedTime.hour,
                                                       _datePickedTime.minute,
                                                     );
-                                                     _horafinal = _datePickedTime.format(context);
+                                                    _horafinal = _datePickedTime
+                                                        .format(context);
                                                   });
                                                 }
                                               },
@@ -421,13 +425,14 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                               options: FFButtonOptions(
                                                 width: double.infinity,
                                                 height: 48.0,
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         24.0, 0.0, 24.0, 0.0),
                                                 iconPadding:
                                                     const EdgeInsetsDirectional
                                                         .fromSTEB(
-                                                            0.0, 0.0, 0.0, 0.0),
+                                                        0.0, 0.0, 0.0, 0.0),
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryBackground,
@@ -456,8 +461,9 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 8.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 8.0),
                                       child: Text(
                                         'Detalles del problema',
                                         style: FlutterFlowTheme.of(context)
@@ -470,10 +476,11 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                               fontWeight: FontWeight.w500,
                                             ),
                                       ),
-                                    ),                  
+                                    ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 6.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 6.0, 0.0, 0.0),
                                       child: TextFormField(
                                         controller:
                                             _model.resumenTextController,
@@ -489,7 +496,8 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                                   .labelLarge
                                                   .override(
                                                     fontFamily: 'Outfit',
-                                                    color: const Color(0xFF606A85),
+                                                    color:
+                                                        const Color(0xFF606A85),
                                                     fontSize: 16.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
@@ -500,7 +508,8 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                                   .labelMedium
                                                   .override(
                                                     fontFamily: 'Outfit',
-                                                    color: const Color(0xFF606A85),
+                                                    color:
+                                                        const Color(0xFF606A85),
                                                     fontSize: 16.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
@@ -510,7 +519,8 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                                   .bodyMedium
                                                   .override(
                                                     fontFamily: 'Figtree',
-                                                    color: const Color(0xFFFF5963),
+                                                    color:
+                                                        const Color(0xFFFF5963),
                                                     fontSize: 16.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w600,
@@ -524,9 +534,8 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                                 BorderRadius.circular(12.0),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                   const Color(0xFFCD983A),
+                                            borderSide: const BorderSide(
+                                              color: Color(0xFFCD983A),
                                               width: 2.0,
                                             ),
                                             borderRadius:
@@ -550,14 +559,15 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                                 BorderRadius.circular(12.0),
                                           ),
                                           filled: true,
-                                          fillColor: (_model
-                                                      .resumenFocusNode
+                                          fillColor: (_model.resumenFocusNode
                                                       ?.hasFocus ??
                                                   false)
-                                              ? Color.fromARGB(255, 255, 255, 255)
+                                              ? const Color.fromARGB(
+                                                  255, 255, 255, 255)
                                               : Colors.white,
                                           contentPadding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional
+                                                  .fromSTEB(
                                                   16.0, 16.0, 16.0, 16.0),
                                         ),
                                         style: FlutterFlowTheme.of(context)
@@ -573,8 +583,7 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                             ),
                                         maxLines: 10,
                                         minLines: 8,
-                                        cursorColor:
-                                             const Color(0xFFCD983A),
+                                        cursorColor: const Color(0xFFCD983A),
                                       ),
                                     ),
                                   ]
@@ -590,7 +599,8 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                   child: Container(
                     constraints: const BoxConstraints(
                       maxWidth: 850.0,
@@ -602,19 +612,24 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                       child: FFButtonWidget(
                         onPressed: () async {
                           await rc.addReport(Reportes(
-                                         id: randomInteger(0, 999), 
-                                            horaI: _horainicio, 
-                                            horaF: _horafinal, 
-                                            nombreCliente: _model.nombreTextController.text, 
-                                            idCliente:int.tryParse(
-                                                _model.idTextController.text) ??
-                                            0, 
-                                            resumen: _model.resumenTextController.text,
-                                             calificacion: 0, 
-                                             nombreUS: nombreP.toString(),
-                                       
-                                      
-                                      ));
+                            id: randomInteger(0, 999),
+                            horaI: _horainicio,
+                            horaF: _horafinal,
+                            nombreCliente: _model.nombreTextController.text,
+                            idCliente:
+                                int.tryParse(_model.idTextController.text) ?? 0,
+                            resumen: _model.resumenTextController.text,
+                            calificacion: 0,
+                            nombreUS: userSend!.nombre,
+                          ));
+                          await auc.updateUser(User(
+                            id: userSend!.id,
+                            email: userSend!.email,
+                            password: userSend!.password,
+                            nombre: userSend!.nombre,
+                            reportes: userSend!.reportes + 1,
+                          ));
+                          Get.back(result: 'Reporte enviado');
                         },
                         text: 'Enviar reporte',
                         options: FFButtonOptions(

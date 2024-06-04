@@ -106,7 +106,7 @@ class _AdministrarUSWidgetState extends State<AdministrarUSWidget>
             gradient: LinearGradient(
               colors: [Color(0xFF4D7250), Color(0xFF8DCE8F)],
               stops: [0.0, 0.6],
-              begin: const AlignmentDirectional(0.87, -1.0),
+              begin: AlignmentDirectional(0.87, -1.0),
               end: AlignmentDirectional(-0.87, 1.0),
             ),
           ),
@@ -525,7 +525,7 @@ class _AdministrarUSWidgetState extends State<AdministrarUSWidget>
                                     0.0, 0.0, 0.0, 16.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    if(usuario != null){
+                                    if (usuario != null) {
                                       await auc.updateUser(User(
                                         id: int.tryParse(
                                                 _model.idTextController.text) ??
@@ -538,9 +538,10 @@ class _AdministrarUSWidgetState extends State<AdministrarUSWidget>
                                         nombre: _model.nameTextController.text,
                                         reportes: usuario.reportes,
                                       ));
-                                    }else{
+                                      Get.back(result: 'updated');
+                                    } else {
                                       await auc.addUser(User(
-                                         id: int.tryParse(
+                                        id: int.tryParse(
                                                 _model.idTextController.text) ??
                                             0,
                                         email: _model
@@ -550,12 +551,9 @@ class _AdministrarUSWidgetState extends State<AdministrarUSWidget>
                                             0,
                                         nombre: _model.nameTextController.text,
                                         reportes: 0,
-                                      
                                       ));
+                                      Get.back(result: 'created');
                                     }
-                                      
-                                    
-                                     Get.back();
                                   },
                                   text: 'Crear miembro',
                                   options: FFButtonOptions(

@@ -1,5 +1,5 @@
 import 'package:flutter_application_1/ui/controllers/reporte_controller.dart';
-import 'package:flutter_application_1/domain/models/user.dart';
+import 'package:flutter_application_1/data/models/user.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -324,25 +324,25 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                                 0.0, 12.0, 16.0, 12.0),
                                             child: FFButtonWidget(
                                               onPressed: () async {
-                                                final _datePickedTime =
+                                                final datePickedTime =
                                                     await showTimePicker(
                                                   context: context,
                                                   initialTime:
                                                       TimeOfDay.fromDateTime(
                                                           getCurrentTimestamp),
                                                 );
-                                                if (_datePickedTime != null) {
+                                                if (datePickedTime != null) {
                                                   safeSetState(() {
                                                     _model.datePicked =
                                                         DateTime(
                                                       getCurrentTimestamp.year,
                                                       getCurrentTimestamp.month,
                                                       getCurrentTimestamp.day,
-                                                      _datePickedTime.hour,
-                                                      _datePickedTime.minute,
+                                                      datePickedTime.hour,
+                                                      datePickedTime.minute,
                                                     );
                                                     _horainicio =
-                                                        _datePickedTime
+                                                        datePickedTime
                                                             .format(context);
                                                   });
                                                 }
@@ -397,24 +397,24 @@ class _ReporteWidgetState extends State<ReporteWidget> {
                                                 0.0, 12.0, 16.0, 12.0),
                                             child: FFButtonWidget(
                                               onPressed: () async {
-                                                final _datePickedTime =
+                                                final datePickedTime0 =
                                                     await showTimePicker(
                                                   context: context,
                                                   initialTime:
                                                       TimeOfDay.fromDateTime(
                                                           getCurrentTimestamp),
                                                 );
-                                                if (_datePickedTime != null) {
+                                                if (datePickedTime0 != null) {
                                                   safeSetState(() {
                                                     _model.datePicked =
                                                         DateTime(
                                                       getCurrentTimestamp.year,
                                                       getCurrentTimestamp.month,
                                                       getCurrentTimestamp.day,
-                                                      _datePickedTime.hour,
-                                                      _datePickedTime.minute,
+                                                      datePickedTime0.hour,
+                                                      datePickedTime0.minute,
                                                     );
-                                                    _horafinal = _datePickedTime
+                                                    _horafinal = datePickedTime0
                                                         .format(context);
                                                   });
                                                 }

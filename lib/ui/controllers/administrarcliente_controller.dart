@@ -1,6 +1,6 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:get/get.dart';
-import 'package:flutter_application_1/domain/models/client.dart';
+import 'package:flutter_application_1/data/models/client.dart';
 import 'package:flutter_application_1/domain/use_case/uc_usecase.dart';
 import 'package:loggy/loggy.dart';
 
@@ -44,10 +44,6 @@ class AdministrarClienteController extends GetxController {
         Get.back(result: "created");
       }
 
-      // Opcional: Actualizar la lista de clientes en la pantalla principal
-      // Get.find<OtroController>().updateClients(); // Si tienes otro controlador que maneja la lista principal
-
-      // Recargar la lista local
       getClients(); 
 
     } catch (e) {

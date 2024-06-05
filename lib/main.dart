@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/data/models/reportsDB.dart';
+import 'package:flutter_application_1/domain/repositories/i_clients_repository.dart';
+import 'package:flutter_application_1/domain/repositories/i_reports_repository.dart';
 import 'package:flutter_application_1/domain/repositories/i_user_repository.dart';
 import 'package:flutter_application_1/domain/use_case/uc_usecase.dart';
 import 'package:flutter_application_1/ui/controllers/administrarCliente_controller.dart';
@@ -17,15 +20,30 @@ import 'package:flutter_application_1/ui/pages/Soporte/soporte_widget.dart';
 import 'package:flutter_application_1/ui/pages/Coordinador/administrarCliente_widget.dart';
 import 'package:flutter_application_1/ui/pages/Coordinador/Coordinador_widget.dart';
 import 'package:get/get.dart';
-// Asegúrate de que la ruta es correcta y apunta a tu archivo LoginWidget
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
+Future <List<Box>> openBox() async {
+  List<Box> boxes = [];
+  Hive.initFlutter();
+  Hive.registerAdapter(reportsDBAdapter());
+  boxes.add(await Hive.openBox('reports'));
+  return boxes;
+}
+
+
+void main() async{
+    WidgetsFlutterBinding.ensureInitialized();
+    await openBox();
     Get.put(IUserRepository());
+    Get.put(IReportsRepository());
+    Get.put(IClientsRepository());
     Get.put(UCUseCase());
     Get.put(AdministrarClienteController());
     Get.put(UCController());
     Get.put(LoginController());
     Get.put(USController());
+    Get.put(UCController());
     Get.put(ReporteController());
     Get.put(AdministrarUSController());
   runApp(const MyApp());
@@ -38,6 +56,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return GetMaterialApp(
+      // initialBinding: AppBinding(),
       title: 'Login App', // Cambia el título según lo necesites
       theme: ThemeData(
           primaryColor: const Color.fromARGB(

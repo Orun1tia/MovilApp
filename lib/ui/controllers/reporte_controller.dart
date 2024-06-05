@@ -1,7 +1,7 @@
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:get/get.dart';
-import 'package:flutter_application_1/domain/models/report.dart';
-import 'package:flutter_application_1/domain/models/user.dart';
+import 'package:flutter_application_1/data/models/report.dart';
+import 'package:flutter_application_1/data/models/user.dart';
 import 'package:flutter_application_1/domain/use_case/uc_usecase.dart';
 import 'package:loggy/loggy.dart';
 

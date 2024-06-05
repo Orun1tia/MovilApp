@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
-import '../../domain/models/client.dart';
-import '../../domain/models/report.dart';
-import '../../domain/models/user.dart';
+import '../../data/models/client.dart';
+import '../../data/models/report.dart';
+import '../../data/models/user.dart';
 import '../../domain/use_case/uc_usecase.dart';
 
 class UCController extends GetxController {

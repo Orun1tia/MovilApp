@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:flutter_application_1/domain/models/user.dart';
+import 'package:flutter_application_1/data/models/user.dart';
 import 'package:flutter_application_1/domain/use_case/uc_usecase.dart';
 
 class LoginController extends GetxController {

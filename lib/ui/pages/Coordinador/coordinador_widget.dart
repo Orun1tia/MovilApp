@@ -1,4 +1,4 @@
-import 'package:flutter_application_1/domain/models/report.dart';
+import 'package:flutter_application_1/data/models/report.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ui/controllers/coordinador_controller.dart';

@@ -1,52 +1,55 @@
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 
-import '../models/user.dart';
-import '../models/client.dart';
-import '../models/report.dart';
+import '../../data/models/user.dart';
+import '../../data/models/client.dart';
+import '../../data/models/report.dart';
 import '../repositories/i_user_repository.dart';
+import '../repositories/i_reports_repository.dart';
+import '../repositories/i_clients_repository.dart';
 
 class UCUseCase {
-  final IUserRepository _repository = Get.find();
+  final IUserRepository _repositoryUser = Get.find();
+  final IReportsRepository _repositoryReport = Get.find();
+  final IClientsRepository _repositoryClient = Get.find();
 
   UCUseCase();
 
   Future<List<User>> getUsers() async {
     logInfo("Getting users from UseCase");
-    return await _repository.getUsers();
+    return await _repositoryUser.getUsers();
   }
 
-  Future<void> addUser(User user) async => await _repository.addUser(user);
+  Future<void> addUser(User user) async => await _repositoryUser.addUser(user);
 
   Future<void> updateUser(User user) async =>
-      await _repository.updateUser(user);
+      await _repositoryUser.updateUser(user);
 
-  deleteUser(int id) async => await _repository.deleteUser(id);
+  deleteUser(int id) async => await _repositoryUser.deleteUser(id);
 
   Future<List<Client>> getClients() async {
     logInfo("Getting users from UseCase");
-    return await _repository.getClients();
+    return await _repositoryClient.getClients();
   }
 
   Future<void> addClient(Client client) async =>
-      await _repository.addClient(client);
+      await _repositoryClient.addClient(client);
 
   Future<void> updateClient(Client client) async =>
-      await _repository.updateClient(client);
+      await _repositoryClient.updateClient(client);
 
-  Future<void> deleteClient(int id) async => await _repository.deleteClient(id);
+  Future<void> deleteClient(int id) async => await _repositoryClient.deleteClient(id);
 
   Future<List<Reportes>> getReports() async {
     logInfo("Getting users from UseCase");
-    return await _repository.getReports();
+    return await _repositoryReport.getReports();
   }
 
   Future<void> addReport(Reportes report) async =>
-      await _repository.addReport(report);
+      await _repositoryReport.addReport(report);
 
   Future<void> updateReport(Reportes report) async =>
-      await _repository.updateReport(report);
+      await _repositoryReport.updateReport(report);
 
-  Future<void> deleteReport(int id) async => await _repository.deleteReport(id);
-  //simulateProcess() async => await _repository.simulateProcess();
+  Future<void> deleteReport(int id) async => await _repositoryReport.deleteReport(id);
 }

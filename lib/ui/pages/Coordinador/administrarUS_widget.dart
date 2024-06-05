@@ -1,4 +1,4 @@
-import 'package:flutter_application_1/domain/models/user.dart';
+import 'package:flutter_application_1/data/models/user.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';

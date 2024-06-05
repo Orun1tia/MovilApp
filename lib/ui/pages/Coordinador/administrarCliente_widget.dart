@@ -1,6 +1,4 @@
-import 'dart:html';
-
-import 'package:flutter_application_1/domain/models/client.dart';
+import 'package:flutter_application_1/data/models/client.dart';
 import 'package:flutter_application_1/ui/models/administrarCliente_model.dart';
 import 'package:flutter_application_1/ui/controllers/administrarcliente_controller.dart';
 import 'package:flutterflow_ui/flutterflow_ui.dart';
@@ -108,7 +106,7 @@ class _AdministrarClienteWidgetState extends State<AdministrarClienteWidget>
             gradient: LinearGradient(
               colors: [Color(0xFF4D7250), Color(0xFF8DCE8F)],
               stops: [0.0, 0.6],
-              begin: const AlignmentDirectional(0.87, -1.0),
+              begin: AlignmentDirectional(0.87, -1.0),
               end: AlignmentDirectional(-0.87, 1.0),
             ),
           ),
@@ -217,7 +215,7 @@ class _AdministrarClienteWidgetState extends State<AdministrarClienteWidget>
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 16.0),
-                                child: Container(
+                                child: SizedBox(
                                   width: double.infinity,
                                   child: TextFormField(
                                     controller: _model.idTextController,
@@ -288,7 +286,7 @@ class _AdministrarClienteWidgetState extends State<AdministrarClienteWidget>
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 16.0),
-                                child: Container(
+                                child: SizedBox(
                                   width: double.infinity,
                                   child: TextFormField(
                                     controller: _model.nameTextController,

@@ -1,4 +1,4 @@
-import '../models/user.dart';
+import '../../data/models/user.dart';
 import '../repositories/i_user_repository.dart';
 
 class UserUseCase {

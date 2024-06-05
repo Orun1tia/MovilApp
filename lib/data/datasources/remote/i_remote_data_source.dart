@@ -2,19 +2,19 @@
 
 import 'dart:convert';
 import 'package:loggy/loggy.dart';
-import '../../../domain/models/user.dart';
-import '../../../domain/models/client.dart';
-import '../../../domain/models/report.dart';
+import '../../models/user.dart';
+import '../../models/client.dart';
+import '../../models/report.dart';
 import 'package:http/http.dart' as http;
 
 
-class IUserDataSource{
+class IDataSourceRemote{
   final http.Client httpClient;
   final String apiKeyUser = '0QSKzi';
   final String apiKeyClient = 'N9pMJ6';
   final String apiKeyReport = 'ICID3B';
 
-  IUserDataSource({http.Client? client}) : httpClient = client ?? http.Client();
+  IDataSourceRemote({http.Client? client}) : httpClient = client ?? http.Client();
 
   @override
   Future<List<User>> getUsers() async {

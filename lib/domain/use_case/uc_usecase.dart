@@ -52,4 +52,17 @@ class UCUseCase {
       await _repositoryReport.updateReport(report);
 
   Future<void> deleteReport(int id) async => await _repositoryReport.deleteReport(id);
+
+  Future<List> getReportsLocal() async => await _repositoryReport.getReportsLocal();
+
+  Future<void> addReportLocal(Reportes report) async =>
+      await _repositoryReport.addReportLocal(report);
+
+  Future<void> deleteReportLocal(Reportes report) async =>
+      await _repositoryReport.deleteReportLocal(report);
+
+  Future<void> updateReportLocal(Reportes report) async =>
+      await _repositoryReport.updateReportLocal(report);
+
+  Future<void> deleteAllLocal() async => await _repositoryReport.deleteAllLocal();
 }

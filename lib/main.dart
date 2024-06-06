@@ -21,7 +21,6 @@ import 'package:flutter_application_1/ui/pages/Coordinador/administrarCliente_wi
 import 'package:flutter_application_1/ui/pages/Coordinador/Coordinador_widget.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path_provider/path_provider.dart';
 
 Future <List<Box>> openBox() async {
   List<Box> boxes = [];
@@ -30,7 +29,6 @@ Future <List<Box>> openBox() async {
   boxes.add(await Hive.openBox('reports'));
   return boxes;
 }
-
 
 void main() async{
     WidgetsFlutterBinding.ensureInitialized();
@@ -56,11 +54,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return GetMaterialApp(
-      // initialBinding: AppBinding(),
-      title: 'Login App', // Cambia el título según lo necesites
+      title: 'Login App',
       theme: ThemeData(
           primaryColor: const Color.fromARGB(
-              255, 205, 152, 58) // Puedes personalizar el tema
+              255, 205, 152, 58)
           ),
       initialRoute: '/login',
       getPages: [

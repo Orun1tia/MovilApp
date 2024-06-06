@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ui/models/soporte_model.dart';
 import 'package:flutter_application_1/ui/controllers/soporte_controller.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class PrincipalUsWidget extends StatefulWidget {
   const PrincipalUsWidget({super.key});
@@ -36,9 +34,9 @@ class _PrincipalUsWidgetState extends State<PrincipalUsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // var filteredReports = usc.reports
-    //     .where((report) => report.nombreUS == userSend?.nombre)
-    //     .toList();
+    var filteredReports = usc.reports
+        .where((report) => report.nombreUS == userSend?.nombre)
+        .toList();
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -47,8 +45,14 @@ class _PrincipalUsWidgetState extends State<PrincipalUsWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         floatingActionButton: FloatingActionButton(
-          onPressed: () =>
-              Navigator.pushNamed(context, '/reporte', arguments: userSend),
+          onPressed: () async {
+            final result =
+                await Get.toNamed('/reporte', arguments: userSend);
+            if (result == 'Reporte enviado') {
+              await usc.getReports();
+              setState(() {});
+            }
+          },
           backgroundColor: const Color(0xFFCD983A),
           elevation: 8.0,
           child: Icon(
@@ -117,192 +121,159 @@ class _PrincipalUsWidgetState extends State<PrincipalUsWidget> {
                                     maxWidth: 1200.0,
                                   ),
                                   decoration: const BoxDecoration(),
-                                  child: ValueListenableBuilder<Box<dynamic>>(
-                                    valueListenable:
-                                        Hive.box('reports').listenable(),
-                                    builder: (context, reportBox, child) {
-                                      // Filtramos los reportes aquí, dentro del builder
-                                      final filteredReports = reportBox.values
-                                          .where((report) =>
-                                              report.nombreUS ==
-                                              userSend?.nombre)
-                                          .toList();
+                                  child: ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    shrinkWrap: true,
+                                    itemCount: filteredReports.length,
+                                    itemBuilder: (context, index) {
+                                      final reporte = filteredReports[index];
 
-                                      return ListView.builder(
-                                        padding: EdgeInsets.zero,
-                                        shrinkWrap: true,
-                                        itemCount: filteredReports.length,
-                                        itemBuilder: (context, index) {
-                                          final reporte =
-                                              filteredReports[index];
-
-                                          return Padding(
-                                            padding: const EdgeInsets.all(10),
-                                            child: Container(
-                                              width: double.infinity,
-                                              height:
-                                                  reporte.resumen.length / 5 +
-                                                      160,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                boxShadow: const [
-                                                  BoxShadow(
-                                                    blurRadius: 4.0,
-                                                    color: Color(0x320E151B),
-                                                    offset: Offset(0.0, 1.0),
-                                                  )
-                                                ],
-                                                borderRadius:
-                                                    BorderRadius.circular(12.0),
-                                              ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(25, 8, 25, 8),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(12.0,
-                                                              0.0, 0.0, 0.0),
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
+                                      return Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Container(
+                                          width: double.infinity,
+                                          height:
+                                              reporte.resumen.length / 5 + 160,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                blurRadius: 4.0,
+                                                color: Color(0x320E151B),
+                                                offset: Offset(0.0, 1.0),
+                                              )
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(25, 8, 25, 8),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          12.0, 0.0, 0.0, 0.0),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(0.0,
+                                                                0.0, 0.0, 8.0),
+                                                        child: Text(
+                                                          'Reporte # ${reporte.id}',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .titleSmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                letterSpacing:
                                                                     0.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    8.0),
-                                                            child: Text(
-                                                              'Reporte # ${reporte.id}',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .titleSmall
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Readex Pro',
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryText,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                  ),
+                                                              ),
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        '${reporte.horaI} - ${reporte.horaF}',
+                                                        style: FlutterFlowTheme
+                                                                .of(context)
+                                                            .bodySmall
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Readex Pro',
+                                                              fontSize: 14.0,
+                                                              letterSpacing:
+                                                                  0.0,
                                                             ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(0.0,
+                                                                8.0, 0.0, 0.0),
+                                                        child: Text(
+                                                          'cliente: ${reporte.nombreCliente}',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(0.0,
+                                                                8.0, 0.0, 0.0),
+                                                        child: Text(
+                                                          'soporte: ${reporte.nombreUS}',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Readex Pro',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(0.0,
+                                                                8.0, 0.0, 0.0),
+                                                        child: ConstrainedBox(
+                                                          constraints:
+                                                              const BoxConstraints(
+                                                            maxWidth: 200.0,
                                                           ),
-                                                          Text(
-                                                            '${reporte.horaI} - ${reporte.horaF}',
+                                                          child: Text(
+                                                            'resumen: ${reporte.resumen}',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodySmall
+                                                                .labelMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Readex Pro',
-                                                                  fontSize:
-                                                                      14.0,
                                                                   letterSpacing:
                                                                       0.0,
                                                                 ),
                                                           ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    0.0,
-                                                                    8.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                            child: Text(
-                                                              'cliente: ${reporte.nombreCliente}',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .labelMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Readex Pro',
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    0.0,
-                                                                    8.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                            child: Text(
-                                                              'soporte: ${reporte.nombreUS}',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .labelMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Readex Pro',
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                    0.0,
-                                                                    8.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                            child:
-                                                                ConstrainedBox(
-                                                              constraints:
-                                                                  const BoxConstraints(
-                                                                maxWidth: 200.0,
-                                                              ),
-                                                              child: Text(
-                                                                'resumen: ${reporte.resumen}',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Readex Pro',
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
+                                              ],
                                             ),
-                                          );
-                                        },
+                                          ),
+                                        ),
                                       );
                                     },
-                                    child: const SizedBox(),
                                   )),
                             ),
                           ],
